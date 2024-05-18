@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Range;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -15,6 +16,7 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Range(min: 1, max: 10)]
     private ?int $code = null;
 
     #[ORM\Column(length: 255)]
