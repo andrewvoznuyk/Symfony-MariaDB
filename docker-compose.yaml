@@ -34,11 +34,47 @@ services:
       courselab:
         ipv4_address: ${NGINX_IPV4}
 
+  mariadb:
+    image: mariadb:latest
+    container_name: ${PROJECT_NAME}-mariadb
+    restart: unless-stopped
+    volumes:
+      - mariadb:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    hostname: mariadb.docker
+    networks:
+      - ${PROJECT_NAME}
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: ${PROJECT_NAME}-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    depends_on:
+      - mariadb
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${PHPMYADMIN_ROOT_PASSWORD}
+      MYSQL_USER: ${PHPMYADMIN_MYSQL_USER}
+      MYSQL_PASSWORD: ${PHPMYADMIN_MYSQL_PASSWORD}
+      UPLOAD_LIMIT: 20M
+    networks:
+      - ${PROJECT_NAME}
+
 
 volumes:
   api:
   nginx:
   data:
+  mariadb:
 
 networks:
   courselab:
