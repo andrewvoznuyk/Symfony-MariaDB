@@ -1,0 +1,25 @@
+*{
+    font-family: "Montserrat", sans-serif !important;
+}
+
+body {
+    margin: 0;
+    font-family: "Montserrat", sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #0F4495 !important;
+}
+
+code {
+    font-family: "Montserrat", sans-serif !important;
+}
+
+.aircraft-table {
+    border-left: 2px solid #414141;
+    border-right: 2px solid #414141;
+}
+
+.centered-table td {
+    text-align: center;
+    vertical-align: middle;
+}

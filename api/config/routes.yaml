@@ -1,0 +1,11 @@
+# config/routes.yaml
+api_login_check:
+  path: /api/login-check
+
+user_get_by_email:
+  path: '/api/users/{email}'
+  methods: ['GET']
+  defaults:
+    _controller: 'App\Controller\UserController::getUserByEmail'
+    _api_resource_class: 'App\Entity\User'
+    _api_item_operation_name: 'get_by_email'
