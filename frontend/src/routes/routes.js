@@ -1,10 +1,16 @@
 import React, { lazy } from "react";
-import HomePage from "../pages/home/HomePage";
+
+const HomeBack = lazy(() => import("../pages/home/HomeBack"));
+const ProductType = lazy(() => import("../pages/home/ProductType"));
 
 const routes = [
   {
     path: "/",
-    element: <HomePage />
+    element: <HomeBack />
+  },
+  {
+    path: "/product-info",
+    element: <ProductType/>
   }
 ];
 

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\EntityListener\ExcursionEntityListener;
 use App\EntityListener\ProductTypeEntityListener;
 use App\Repository\ProductTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -27,7 +26,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
                         "schema" => ["type" => "integer"],
                     ]
                 ]
-            ]
+            ],
         ],
         "post" => [
             "method" => "POST",
@@ -178,7 +177,7 @@ class ProductType
     public function removeProduct(Product $product): static
     {
         if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
+
             if ($product->getType() === $this) {
                 $product->setType(null);
             }

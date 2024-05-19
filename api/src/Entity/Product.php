@@ -31,7 +31,7 @@ use App\Validator\Constraints\Product as ProductConstraint;
                         "schema" => ["type" => "integer"],
                     ]
                 ]
-            ]
+            ],
         ],
         "post" => [
             "method" => "POST",

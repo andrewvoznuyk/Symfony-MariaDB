@@ -12,7 +12,6 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\Security\Core\Security;
 class ProductTypeEntityListener
 {
-
     /**
      * @param ProductType $productType
      * @param LifecycleEventArgs $eventArgs
@@ -24,5 +23,4 @@ class ProductTypeEntityListener
             $product->setType(null);
         }
     }
-
 }
