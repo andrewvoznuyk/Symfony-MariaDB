@@ -40,5 +40,9 @@ a {
 }
 
 .product-type-item > p {
+    margin-left: 40px;
+}
+
+.product-type-item > h3 {
     margin-left: 20px;
 }

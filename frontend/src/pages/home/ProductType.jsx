@@ -21,18 +21,28 @@ const ProductType = () => {
         }
     };
 
+    const formatPrice = (price) => {
+        return price !== undefined ? parseFloat(price).toFixed(2) : "0.00";
+    };
+
     return (
         <>
             <div className="container">
                 <button onClick={() => navigate("/")}>Go Back</button>
                 <h1>Grouped Product Types</h1>
                 <div className="product-type-list">
-                    {productTypes.map((productType, index) => (
-                        <div key={index} className="product-type-item">
-                            <h2>{productType.Type}</h2>
-                            <p>Code: {productType.Code}</p>
-                            <p>Total Items: {productType.TotalItems}</p>
-                            <p>Total Price: {productType.TotalPrice}</p>
+                    {productTypes.map((group, index) => (
+                        <div key={index} className="product-group">
+                            <h2>
+                                Code: {group.code} ({group.totalCodeItems} Products, Total Price: ${formatPrice(group.totalCodePrice)})
+                            </h2>
+                            {Object.entries(group.types).map(([type, details], innerIndex) => (
+                                <div key={innerIndex} className="product-type-item">
+                                    <h3>{type}</h3>
+                                    <p>Total Items: {details.TotalItems}</p>
+                                    <p>Total Price: ${formatPrice(details.TotalPrice)}</p>
+                                </div>
+                            ))}
                         </div>
                     ))}
                 </div>

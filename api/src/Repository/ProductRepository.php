@@ -45,4 +45,47 @@ class ProductRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /*
+     * public function getGroupedProductData(): array
+    {
+        $conn = $this->entityManager->getConnection();
+
+        $sql = '
+            SELECT
+                product.code AS code,
+                COUNT(product.id) AS codeTotalCount,
+                SUM(product.price) AS totalSum,
+                subquery.Type AS Type,
+                subquery.TotalTypeItems AS TotalTypeItems,
+                subquery.TotalTypePrice AS TotalTypePrice
+            FROM
+                product AS product
+            JOIN (
+                SELECT
+                    product.code AS Code,
+                    product_type.type_name AS Type,
+                    COUNT(product.id) AS TotalTypeItems,
+                    SUM(product.price) AS TotalTypePrice
+                FROM
+                    product
+                JOIN
+                    product_type ON product.type_id = product_type.id
+                GROUP BY
+                    product.code,
+                    product_type.type_name
+                ORDER BY
+                    TotalTypeItems DESC,
+                    Code ASC
+            ) AS subquery ON product.code = subquery.Code
+            GROUP BY
+                product.code,
+                subquery.Type
+        ';
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        return $resultSet->fetchAllAssociative();
+    }*/
+
 }
