@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\EntityListener\ExcursionEntityListener;
+use App\EntityListener\ProductTypeEntityListener;
 use App\Repository\ProductTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -37,10 +39,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
         "get" => [
             "method" => "GET",
             "normalization_context" => ["groups" => ["get:item:productType"]]
+        ],
+        "delete" => [
+            "method" => "DELETE",
         ]
     ],
 )]
 #[ORM\Entity(repositoryClass: ProductTypeRepository::class)]
+#[ORM\EntityListeners([ProductTypeEntityListener::class])]
 class ProductType
 {
     /**
@@ -83,6 +89,10 @@ class ProductType
      * @var Collection
      */
     #[ORM\OneToMany(mappedBy: 'type', targetEntity: Product::class)]
+    #[Groups([
+        "get:collection:productType",
+        "get:item:productType",
+    ])]
     private Collection $products;
 
     /**
@@ -176,4 +186,5 @@ class ProductType
 
         return $this;
     }
+
 }

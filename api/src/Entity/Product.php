@@ -14,7 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
+use App\Validator\Constraints\Product as ProductConstraint;
 
+#[ProductConstraint]
 #[ApiResource(
     collectionOperations: [
         "get" => [
@@ -44,7 +46,7 @@ use Symfony\Component\Validator\Constraints\Range;
         ]
     ]
 )]
-#[ApiFilter(SearchFilter::class, properties: ["productName" => "partial"])]
+#[ApiFilter(SearchFilter::class, properties: ["productName" => "start", "type.typeName" => "partial", "code" => "exact", "price" => "start"])]
 #[ApiFilter(NumericFilter::class, properties: ['code'])]
 #[ApiFilter(OrderFilter::class, properties: [
     "id" => "DESC",
@@ -58,7 +60,7 @@ use Symfony\Component\Validator\Constraints\Range;
 class Product
 {
     /**
-     * @var int|null
+     * @var int
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -66,12 +68,14 @@ class Product
     #[Groups([
         "get:collection:product",
         "get:item:product",
-        "post:collection:product"
+        "post:collection:product",
+        "get:collection:productType",
+        "get:item:productType",
     ])]
-    private ?int $id = null;
+    private int $id;
 
     /**
-     * @var int|null
+     * @var int
      */
     #[ORM\Column]
     #[NotBlank]
@@ -79,24 +83,28 @@ class Product
     #[Groups([
         "get:collection:product",
         "get:item:product",
-        "post:collection:product"
+        "post:collection:product",
+        "get:collection:productType",
+        "get:item:productType",
     ])]
-    private ?int $code = null;
+    private int $code;
 
     /**
-     * @var string|null
+     * @var string
      */
     #[NotBlank]
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
     #[Groups([
         "get:collection:product",
         "get:item:product",
-        "post:collection:product"
+        "post:collection:product",
+        "get:collection:productType",
+        "get:item:productType",
     ])]
-    private ?string $productName = null;
+    private string $productName;
 
     /**
-     * @var string|null
+     * @var string
      */
     #[NotBlank]
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
@@ -104,18 +112,21 @@ class Product
     #[Groups([
         "get:collection:product",
         "get:item:product",
-        "post:collection:product"
+        "post:collection:product",
+        "get:collection:productType",
+        "get:item:productType",
     ])]
-    private ?string $price = null;
+    private string $price;
 
     /**
      * @var ProductType|null
      */
     #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'NO ACTION')]
     #[Groups([
         "get:collection:product",
         "get:item:product",
-        "post:collection:product"
+        "post:collection:product",
     ])]
     private ?ProductType $type = null;
 

@@ -28,7 +28,7 @@ services:
         resource: '../src/Action/'
         tags: ['controller.service_arguments']
 
-    App\EntityListener\ExcursionEntityListener:
+    App\EntityListener\ProductTypeEntityListener:
         arguments:
             - '@security.helper'
         tags:
